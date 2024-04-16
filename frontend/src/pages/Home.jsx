@@ -1,30 +1,35 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
+
+// components
+import WorkoutDetails from "../components/WorkoutDetails";
+import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
-  const [workouts, setWorkouts] = useState(null);
+  const { workouts, dispatch } = useWorkoutsContext();
 
   useEffect(() => {
-    const fetchWorkout = async () => {
-      try {
-        const response = await fetch("http://localhost:4000/api/workouts");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        // console.log(await response.text());
-        setWorkouts(data);
-      } catch (error) {
-        console.error("There was a problem with your fetch operation:", error);
+    const fetchWorkouts = async () => {
+      const response = await fetch("http://localhost:4000/api/workouts");
+      const data = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: "SET_WORKOUTS", payload: data });
       }
     };
-    fetchWorkout();
-  }, []);
+
+    fetchWorkouts();
+  }, [dispatch]);
+
   return (
-    <div className="Home">
+    <div className="home">
       <div className="workouts">
         {workouts &&
-          workouts.map((workout) => <p key={workout._id}>{workout.title}</p>)}
+          workouts.map((workout) => (
+            <WorkoutDetails workout={workout} key={workout._id} />
+          ))}
       </div>
+      <WorkoutForm />
     </div>
   );
 };
