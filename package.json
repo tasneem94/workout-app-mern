@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "date-fns": "^3.6.0"
+    "bcrypt": "^5.1.1",
+    "date-fns": "^3.6.0",
+    "hash": "^0.2.1",
+    "validator": "^13.11.0"
   }
 }
