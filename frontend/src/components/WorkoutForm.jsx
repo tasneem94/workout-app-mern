@@ -22,14 +22,17 @@ const WorkoutForm = () => {
 
     const workout = { title, load, reps };
 
-    const response = await fetch(`${process.env.LOCAL_URL}/api/workouts/`, {
-      method: "POST",
-      body: JSON.stringify(workout),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_LOCAL_URL}/api/workouts/`,
+      {
+        method: "POST",
+        body: JSON.stringify(workout),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
     const data = await response.json();
 
     if (!response.ok) {

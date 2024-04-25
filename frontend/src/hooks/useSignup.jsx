@@ -10,11 +10,14 @@ export const useSignup = () => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch(`${process.env.LOCAL_URL}/api/user/signup`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_LOCAL_URL}/api/user/signup`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      }
+    );
     const data = await response.json();
 
     if (!response.ok) {
